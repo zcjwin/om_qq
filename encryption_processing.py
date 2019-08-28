@@ -12,7 +12,7 @@ def putFileVideo():
         path_queue.put(filepath)
     return path_queue
 
-
+# 对视频分块加密并计算偏移量
 def handleFile(video_path):
     block_list = []
     with open(video_path, 'rb') as fb: # 读取视频
@@ -21,12 +21,24 @@ def handleFile(video_path):
             ba = blockSizeSha(fb)   # 对每一块视频进行sha1加密
             # 把加密后的视频段放到字典中
             block_dict = {
-                'index': index,
                 'offset': offset,
                 'blocksha': ba,
             }
             block_list.append(block_dict)
     return block_list
+
+# 分块处理要上传的视频
+def dealVideo(video_path):
+    read_list = []
+    with open(video_path, 'rb') as f:
+        while True:
+            chunk = f.read(1048576)
+            if not chunk:
+                break
+            # print(len(chunk))
+            read_dict = {'blockSize': len(chunk), 'blockVideo': chunk}
+            read_list.append(read_dict)
+    return read_list
 
 
 # 对所要上传的视频进行md5加密
@@ -62,20 +74,9 @@ def blockSizeSha(fb):
         return myhash.hexdigest()
 
 
-# if __name__ == "__main__":
-#     _queue = putFileVideo()
-#     for _ in range(_queue.qsize()):
-#         video_path = _queue.get()
-#         with open(video_path, 'rb') as fb:
-#             for index, offset in enumerate(range(0, os.path.getsize(video_path), 1048576)):
-#                 ba = blockSizeSha(fb)
-#                 print(ba)
-
-
-# print(handleFile())
-
-
-
+if __name__ == "__main__":
+    # print(handleFile())
+    print(dealVideo('E:\\video\\天天这样，谁能顶得住，你是不是心痒痒了？.mp4'))
 
 
 
