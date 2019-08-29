@@ -74,9 +74,9 @@ def blockSizeSha(fb):
         return myhash.hexdigest()
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
     # print(handleFile())
-    print(dealVideo('E:\\video\\天天这样，谁能顶得住，你是不是心痒痒了？.mp4'))
+    # print(dealVideo('E:\\video\\天天这样，谁能顶得住，你是不是心痒痒了？.mp4'))
 
 
 
